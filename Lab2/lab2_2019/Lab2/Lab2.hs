@@ -2,23 +2,31 @@
 {-# LANGUAGE FlexibleInstances #-}
 
 data Expr a = Const Int
-            | Mas   (Expr a) (Expr a)
-            | Conj  (Expr a) (Expr a)
+            | Var Iden
+            | Mas  (Expr Int) (Expr Int)
+            | Cons Bool
+            | Conj (Expr Bool) (Expr Bool)
+            | Menor (Expr Int) (Expr Int)
+            deriving(Show)
 
 class DomSem dom where 
-  sem :: Expr dom -> dom
+    sem :: Expr dom -> State -> dom
 
 instance DomSem Int where
-  sem x = undefined
+    sem (Const n) state = n
+    sem (Var e) state = state e
+    sem (Mas e e') state = (sem e state) + (sem e' state)
 
 instance DomSem Bool where
-  sem x = undefined
+    sem (Cons e) state = e
+    sem (Conj e e') state = (sem e state) && (sem e' state)
+    sem (Menor e e') state = (sem e state) < (sem e' state)
 
 type Iden = String
 type State = Iden -> Int
 
-instance DomSem (State -> Int) where 
-  sem x = undefined
+state::State
+state "x" = 1
+state "y" = 2
+state _ = 0
 
-instance DomSem (State -> Bool) where
-  sem x = undefined

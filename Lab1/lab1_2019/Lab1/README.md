@@ -8,7 +8,7 @@ aritméticas y booleanas.
 
 **Tarea**
 Se provee la sintaxis abstracta de un lenguaje que tiene expresiones de tipo
-entero y expresiones de tipo booleano. Queremos dar una función semántica
+:entero y expresiones de tipo booleano. Queremos dar una función semántica
 
                            sem :: Expr dom -> dom
 
