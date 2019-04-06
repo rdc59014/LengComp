@@ -26,7 +26,7 @@ type Iden = String
 type State = Iden -> Int
 
 state::State
-state "x" = 1
+state "x" = 3
 state "y" = 2
 state _ = 0
 
